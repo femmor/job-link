@@ -5,8 +5,26 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { FormEvent } from "react";
+import { useState } from "react";
 
 export default function SignIn() {
+
+    const [userData, setUserData] = useState({
+        email: "",
+        password: ""
+    });
+
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        console.log(userData);
+
+        // clear form after submission
+        setUserData({
+            email: "",
+            password: ""
+        });
+    };
 
     return (
         <div className="flex min-h-[calc(100vh-140px)] items-center justify-center bg-white p-4">
@@ -19,7 +37,7 @@ export default function SignIn() {
                         Sign in to your account to continue
                     </CardDescription>
                 </CardHeader>
-                <form onSubmit={() => { }} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                     <CardContent className="space-y-4">
                         <div className="space-y-2">
                             <Label htmlFor="email" className="text-gray-700">
@@ -28,7 +46,8 @@ export default function SignIn() {
                             <Input
                                 id="email"
                                 type="email"
-                                onChange={() => { }}
+                                value={userData.email}
+                                onChange={(e) => setUserData({ ...userData, email: e.target.value })}
                                 placeholder="Enter your email"
                                 required
                                 className="border-gray-300 focus:border-default focus:ring-primary"
@@ -42,7 +61,8 @@ export default function SignIn() {
                                 id="password"
                                 type="password"
                                 required
-                                onChange={() => { }}
+                                value={userData.password}
+                                onChange={(e) => setUserData({ ...userData, password: e.target.value })}
                                 placeholder="Enter your password"
                                 minLength={8}
                                 className="border-gray-300 focus:border-default focus:ring-primary"
