@@ -8,7 +8,7 @@ export default function Navbar() {
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-2 text-lg font-bold">
                     <Briefcase size={32} className="text-primary" />
-                    <span>JobTracker</span>
+                    <span className="text-accent-foreground">Job<span className="text-primary emphasis font-medium italic">link</span></span>
                 </Link>
                 <div>
                     <Link href="/sign-in" className="ml-auto text-sm font-bold no-underline">
