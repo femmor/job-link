@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Briefcase } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -19,6 +20,26 @@ export default function HomePage() {
                 </Link>
               </div>
               <p>Free forever, no credit card required.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Hero Images section with tabs */}
+        <section className="border-t bg-white py-16">
+          <div className="container mx-auto px-4">
+            <div className="mx-auto max-w-6xl">
+              {/* Tabs - Buttons to switch different images */}
+              <div className="mb-8 flex justify-center gap-2">
+                <Button variant="ghost" className="cursor-pointer">Organize Applications</Button>
+                <Button variant="ghost" className="cursor-pointer">Get Hired</Button>
+                <Button variant="ghost" className="cursor-pointer">Manage Boards</Button>
+              </div>
+              {/* Images corresponding to each tab */}
+              <div className="mx-auto max-w-5xl relative overflow-hidden rounded-lg shadow-xl border border-gray-200">
+                <Image src="/hero-images/hero1.png" alt="Organize Applications" width={1200} height={800} />
+                <Image src="/hero-images/hero2.png" alt="Get Hired" width={1200} height={800} />
+                <Image src="/hero-images/hero3.png" alt="Manage Boards" width={1200} height={800} />
+              </div>
             </div>
           </div>
         </section>
