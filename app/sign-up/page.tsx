@@ -6,6 +6,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { signUp } from "@/lib/auth/auth-client";
+import { useRouter } from "next/navigation";
+import { is } from "date-fns/locale";
 
 export default function SignUp() {
     const [userData, setUserData] = useState({
@@ -14,9 +17,36 @@ export default function SignUp() {
         password: ""
     });
 
-    const handleSubmit = (e: FormEvent) => {
+    const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const router = useRouter();
+
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        console.log(userData)
+
+        setError(null);
+        setIsLoading(true);
+
+        try {
+            const response = await signUp.email({
+                name: userData.name,
+                email: userData.email,
+                password: userData.password
+            });
+
+            if (response.error) {
+                setError(response.error.message ?? "Failed to sign up. Please try again.");
+            } else {
+                // Sign-up successful, redirect to dashboard
+                router.push("/dashboard");
+            }
+
+        } catch (error) {
+            setError(error instanceof Error ? error.message : "An unexpected error occurred.");
+        } finally {
+            setIsLoading(false);
+        }
 
         // clear form after submission
         setUserData({
@@ -39,6 +69,12 @@ export default function SignUp() {
                 </CardHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <CardContent className="space-y-4">
+                        {error && (
+                            <div className="rounded-md bg-destructive/15 p-3 text-center">
+                                <p className="text-sm text-red-700">{error}</p>
+                            </div>
+                        )}
+
                         <div className="space-y-2">
                             <Label htmlFor="name" className="text-gray-700">
                                 Name
@@ -87,8 +123,9 @@ export default function SignUp() {
                         <Button
                             type="submit"
                             className="w-full bg-primary hover:bg-primary/90"
+                            disabled={isLoading}
                         >
-                            Create Account
+                            {isLoading ? "Creating account..." : "Create Account"}
                         </Button>
                         <p className="text-center text-sm text-gray-600">
                             Already have an account?{" "}

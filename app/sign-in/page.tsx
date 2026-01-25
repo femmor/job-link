@@ -15,7 +15,7 @@ export default function SignIn() {
         password: ""
     });
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         console.log(userData);
 
