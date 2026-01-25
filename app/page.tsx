@@ -1,4 +1,5 @@
 
+import FeatureSection from "@/components/FeatureSection";
 import HeroImageSection from "@/components/HeroImageSection";
 import HeroSection from "@/components/HeroSection";
 
@@ -10,6 +11,8 @@ export default function HomePage() {
         <HeroSection />
         {/* Hero Image Section */}
         <HeroImageSection />
+        {/* Feature Section */}
+        <FeatureSection />
       </main>
     </div>
   );
