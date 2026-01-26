@@ -8,7 +8,6 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { signUp } from "@/lib/auth/auth-client";
 import { useRouter } from "next/navigation";
-import { is } from "date-fns/locale";
 
 export default function SignUp() {
     const [userData, setUserData] = useState({
@@ -47,13 +46,6 @@ export default function SignUp() {
         } finally {
             setIsLoading(false);
         }
-
-        // clear form after submission
-        setUserData({
-            name: "",
-            email: "",
-            password: ""
-        });
     }
 
     return (

@@ -1,29 +1,49 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { signIn } from "@/lib/auth/auth-client";
 import Link from "next/link";
 import { FormEvent } from "react";
-import { useState } from "react";
 
 export default function SignIn() {
-
     const [userData, setUserData] = useState({
         email: "",
         password: ""
     });
 
+    const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const router = useRouter();
+
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        console.log(userData);
 
-        // clear form after submission
-        setUserData({
-            email: "",
-            password: ""
-        });
+        setError(null);
+        setIsLoading(true);
+
+        try {
+            const response = await signIn.email({
+                email: userData.email,
+                password: userData.password
+            });
+
+            if (response.error) {
+                setError(response.error.message ?? "Failed to sign in. Please try again.");
+            } else {
+                // Sign-in successful, redirect to dashboard
+                router.push("/dashboard");
+            }
+        } catch (error) {
+            setError(error instanceof Error ? error.message : "An unexpected error occurred.");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -39,6 +59,11 @@ export default function SignIn() {
                 </CardHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <CardContent className="space-y-4">
+                        {error && (
+                            <div className="rounded-md bg-destructive/15 p-3 text-center">
+                                <p className="text-sm text-red-700">{error}</p>
+                            </div>
+                        )}
                         <div className="space-y-2">
                             <Label htmlFor="email" className="text-gray-700">
                                 Email
@@ -73,8 +98,9 @@ export default function SignIn() {
                         <Button
                             type="submit"
                             className="w-full bg-primary hover:bg-primary/90"
+                            disabled={isLoading}
                         >
-                            Sign In
+                            {isLoading ? "Signing in..." : "Sign In"}
                         </Button>
                         <p className="text-center text-sm text-gray-600">
                             Don&apos;t have an account?{" "}

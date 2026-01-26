@@ -1,8 +1,14 @@
+"use client";
+
 import { Briefcase } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { useSession } from "@/lib/auth/auth-client";
+import { AvatarDropdown } from "../AvatarDropdown";
 
 export default function Navbar() {
+    const { data: session } = useSession();
+
     return (
         <nav className="bg-background border-b border-gray-200 py-4 mb-8">
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -11,14 +17,23 @@ export default function Navbar() {
                     <span className="text-accent-foreground">Job<span className="text-primary emphasis font-medium italic">link</span></span>
                 </Link>
                 <div>
-                    <Link href="/sign-in" className="ml-auto text-sm font-bold no-underline">
-                        <Button variant="ghost" className="cursor-pointer">Sign In</Button>
-                    </Link>
-                    <Link href="/sign-up">
-                        <Button className="ml-4 cursor-pointer" size="sm">
-                            Start for Free
-                        </Button>
-                    </Link>
+
+                    {session?.user ? (
+                        <div className="flex items-center gap-4">
+                            <Link href="/dashboard" className="ml-auto text-sm font-bold no-underline">
+                                <Button variant="ghost" className="cursor-pointer">Dashboard</Button>
+                            </Link>
+                            <AvatarDropdown />
+                        </div>) : (<>
+                            <Link href="/sign-in" className="ml-auto text-sm font-bold no-underline">
+                                <Button variant="ghost" className="cursor-pointer">Sign In</Button>
+                            </Link>
+                            <Link href="/sign-up">
+                                <Button className="ml-4 cursor-pointer" size="sm">
+                                    Start for Free
+                                </Button>
+                            </Link>
+                        </>)}
                 </div>
             </div>
         </nav>
