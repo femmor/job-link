@@ -1,4 +1,3 @@
-import { connectDB } from "./db";
 import { Board } from "./models/board";
 import { Column } from "./models/column";
 
@@ -27,8 +26,6 @@ const DEFAULT_COLUMNS = [
 
 export async function initUserBoard(userId: string) {
     try {
-        // Connect to the database
-        await connectDB();
 
         // Get the existing board for the user
         const existingBoard = await Board.findOne({ userId, name: "Default Board" });

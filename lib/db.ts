@@ -78,3 +78,16 @@ export async function connectDB() {
     return mongooseCache.conn;
 }
 
+/**
+ * Ensures database connection is established
+ * This is called automatically when models are imported
+ */
+const ensureConnection = () => {
+    if (!mongooseCache.conn && !mongooseCache.promise) {
+        connectDB().catch(console.error);
+    }
+};
+
+// Auto-initialize connection when this module is imported
+ensureConnection();
+

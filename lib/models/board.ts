@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+import "../db"; // Ensure database connection
 
 
 export interface IBoard extends Document {
