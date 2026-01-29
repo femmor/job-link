@@ -10,7 +10,8 @@ export function DroppableColumn({ column, config, boardId }: DroppableColumnProp
             <div>
                 <div className="flex justify-center items-center space-x-2">
                     {config.icon}
-                    <CardTitle className="text-white font-semibold mt-2">{column.name}</CardTitle>
+                    <CardTitle className="text-white font-semibold">{column.name}</CardTitle>
+
                 </div>
             </div>
 

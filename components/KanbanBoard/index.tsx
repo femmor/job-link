@@ -31,7 +31,7 @@ export function KanbanBoard({ board, columns, userId }: KanbanBoardProps) {
 
     return (
         <>
-            <div className="overflow-x-auto container mx-auto p-4">
+            <div className="overflow-x-auto container mx-auto py-4">
                 <div className="flex gap-4">
                     {columns.map((col, key) => {
                         const config = COLUMN_CONFIG[key] || {
