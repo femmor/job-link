@@ -3,15 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { MoreVertical, Trash2 } from "lucide-react";
+import { CreateJobApplicationDialog } from "../CreateJobDialog";
 
 export function DroppableColumn({ column, config, boardId }: DroppableColumnProps) {
-    return (<Card className="w-64 shrink-0 h-full pt-0" key={boardId}>
+    return (<Card className="h-full pt-0" key={boardId}>
         <CardHeader className={`flex items-center space-x-2 p-4 ${config.color}`}>
             <div>
                 <div className="flex justify-center items-center space-x-2">
                     {config.icon}
                     <CardTitle className="text-white font-semibold">{column.name}</CardTitle>
-
                 </div>
             </div>
 
@@ -23,15 +23,15 @@ export function DroppableColumn({ column, config, boardId }: DroppableColumnProp
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-32">
                     <DropdownMenuItem className="text-destructive">
-                        <Trash2 className="mr-2 h-4 w-4" />
+                        <Trash2 className="mr-2 h-4 w-4 text-destructive" />
                         Delete
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         </CardHeader>
 
-        <CardContent className="pt-4 space-y-4 bg-gray-50/50 min-h-100 rounded-b-lg">
-
+        <CardContent className="pt-2 space-y-2 bg-gray-50/50 min-h-100 rounded-b-lg">
+            <CreateJobApplicationDialog boardId={boardId} columnId={column._id.toString()} onJobCreated={() => { }} />
         </CardContent>
     </Card>)
 }
